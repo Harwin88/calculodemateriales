@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculadora de concreto</title>
+    <style>
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        font-size: 16px;
+      }
+    
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+    
+      button[type="button"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    
+      button[type="button"]:hover {
+        background-color: #45a049;
+      }
+    
+      h1, h2 {
+        text-align: center;
+      }
+    
+      #cemento, #agua, #agregadoGrueso, #agregadoFino {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      #resultados {
+  margin-top: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.resultado {
+  flex: 1;
+  text-align: center;
+}
+
+.resultado strong {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.resultado p {
+  font-size: 1.5rem;
+}
+
+
+    </style>
+    
+  </head>
+  <body>
+    <h1>Calculadora de concreto</h1>
+    <form style="max-width: 500px; margin: 0 auto;">
+      <label for="largo">Largo:</label>
+      <div class="input-group">
+        <input type="number" id="largo" name="largo" placeholder="metros" class="form-control">
+      </div>
+    
+      <label for="ancho">Ancho:</label>
+      <div class="input-group">
+        <input type="number" id="ancho" name="ancho" placeholder="metros" class="form-control">
+      </div>
+    
+      <label for="espesor">Espesor:</label>
+      <div class="input-group">
+        <input type="number" id="espesor" name="espesor" placeholder="centímetros" class="form-control">
+      </div>
+    
+      <label for="factor">Factor de correcci&oacute;n:</label>
+      <div class="input-group">
+        <input type="number" id="factor" name="factor" placeholder="porcentaje" class="form-control">
+      </div>
+    
+      <label for="resistencia">Resistencia del concreto:</label>
+      <div class="input-group">
+        <input type="number" id="resistencia" name="resistencia" placeholder="kilopascales" class="form-control">
+      </div>
+    
+      <label for="relacion">Relaci&oacute;n agua/cemento:</label>
+      <div class="input-group">
+        <input type="number" id="relacion" name="relacion" placeholder="raz&oacute;n" class="form-control">
+      </div>
+    
+      <button type="button" onclick="calcularConcreto()" class="btn btn-primary mt-3">Calcular</button>
+    </form>
+    
+    
+
+    <div id="resultados">
+  <div class="resultado">
+    <strong>Cemento:</strong>
+    <p id="cemento"></p>
+  </div>
+  <div class="resultado">
+    <strong>Agua:</strong>
+    <p id="agua"></p>
+  </div>
+  <div class="resultado">
+    <strong>Agregado grueso:</strong>
+    <p id="agregadoGrueso"></p>
+  </div>
+  <div class="resultado">
+    <strong>Agregado fino:</strong>
+    <p id="agregadoFino"></p>
+  </div>
+</div>
+  </body>
+  <script type="text/javascript">
+    function calcularConcreto() {
+      // Obtener los valores ingresados por el usuario
+      const largo = parseFloat(document.getElementById("largo").value);
+      const ancho = parseFloat(document.getElementById("ancho").value);
+      const espesor = parseFloat(document.getElementById("espesor").value);
+      const factor = parseFloat(document.getElementById("factor").value);
+      const resistencia = parseFloat(document.getElementById("resistencia").value);
+      const relacion = parseFloat(document.getElementById("relacion").value);
+
+      // Calcular el volumen de la losa de concreto
+      const volumen = largo * ancho * espesor;
+
+      // Ajustar el volumen por el factor de correcci&oacute;n
+      const volumenAjustado = volumen * factor;
+
+      // Calcular la cantidad de cemento
+      const cemento = volumenAjustado * relacion * 1000 / (resistencia * 1.54);
+
+      // Calcular la cantidad de agua
+      const agua = volumenAjustado * relacion;
+
+      // Calcular la cantidad de agregado grueso y fino
+      const agregadoGrueso = volumenAjustado * 0.6 * 1000;
+      const agregadoFino = volumenAjustado * 1.2 * 1000;
+
+// Mostrar los resultados en la página
+document.getElementById("cemento").innerHTML = `<strong>Cemento:</strong> ${cemento.toFixed(2)} kg`;
+document.getElementById("agua").innerHTML = `<strong>Agua:</strong> ${agua.toFixed(2)} litros`;
+document.getElementById("agregadoGrueso").innerHTML = `<strong>Agregado grueso:</strong> ${agregadoGrueso.toFixed(2)} kg`;
+document.getElementById("agregadoFino").innerHTML = `<strong>Agregado fino:</strong> ${agregadoFino.toFixed(2)} kg`;
+
+}
+</script>
+
+</html>
